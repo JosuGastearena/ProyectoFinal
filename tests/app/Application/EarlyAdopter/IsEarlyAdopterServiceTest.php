@@ -39,7 +39,7 @@ class IsEarlyAdopterServiceTest extends TestCase
             ->expects('findByEmail')
             ->with($email)
             ->once()
-            ->andThrow(new Exception('User not '));
+            ->andThrow(new Exception('User not found'));
 
         $this->expectException(Exception::class);
 
