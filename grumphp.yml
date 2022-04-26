@@ -1,5 +1,4 @@
 grumphp:
     tasks:
       phpunit: null
-      phpcsfixer: null
 
