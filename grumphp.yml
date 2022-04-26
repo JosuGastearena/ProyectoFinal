@@ -4,9 +4,9 @@ grumphp:
       phpcsfixer:
         cache_file: ~
         config: ~
-        rules: [ ]
+        rules: [ PSR12 ]
         using_cache: ~
         verbose: true
-        diff: false
-        triggered_by: [ 'php' ]
-
+    fixer:
+      enabled: true
+      fix_by_default: true
