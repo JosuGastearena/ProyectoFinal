@@ -6,6 +6,7 @@ use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
 use App\Application\GetCoin\GetCoinService;
 use App\Domain\Coin;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Tests\TestCase;
 use Mockery;
 
@@ -39,5 +40,21 @@ class GetCoinServiceTest extends TestCase
 
         $expectedCoin = $this->getCoinService->execute('1');
         $this->assertEquals($coin, $expectedCoin);
+    }
+
+    /**
+     * @test
+     */
+    public function serviceUnavailableWhenIDIntroduced()
+    {
+        $this->cryptoCurrenciesDataSource
+            ->expects('coinStatus')
+            ->with('2')
+            ->once()
+            ->andThrows(new ServiceUnavailableHttpException(0, 'Service unavailable'));
+
+        $this->expectException(ServiceUnavailableHttpException::class);
+
+        $this->getCoinService->execute('2');
     }
 }
