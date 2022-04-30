@@ -27,6 +27,10 @@ class GetCoinController extends BaseController
             return response()->json([
                 'error' => $exception->getMessage()
             ], Response::HTTP_SERVICE_UNAVAILABLE);
+        } catch (NotFoundHttpException $exception) {
+            return response()->json([
+                'error' => $exception->getMessage()
+            ], Response::HTTP_NOT_FOUND);
         }
         return response()->json([
             'coin_id' => $coin->getCoin_id(),
