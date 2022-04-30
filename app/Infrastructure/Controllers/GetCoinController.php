@@ -21,8 +21,17 @@ class GetCoinController extends BaseController
 
     public function __invoke(string $coinID): JsonResponse
     {
-        $coin = $this->getCoinService->execute($coinID);
-
+        try {
+            $coin = $this->getCoinService->execute($coinID);
+        } catch (ServiceUnavailableHttpException $exception) {
+            return response()->json([
+                'error' => $exception->getMessage()
+            ], Response::HTTP_SERVICE_UNAVAILABLE);
+        } catch (NotFoundHttpException $exception) {
+            return response()->json([
+                'error' => $exception->getMessage()
+            ], Response::HTTP_NOT_FOUND);
+        }
         return response()->json([
             'coin_id' => $coin->getCoin_id(),
             'symbol' => $coin->getSymbol(),

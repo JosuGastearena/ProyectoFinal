@@ -51,4 +51,36 @@ class GetCoinControllerTest extends TestCase
             'price_usd' => "100"
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function serviceUnavailableWhenIDIntroduced()
+    {
+        $this->cryptoCurrenciesDataSource
+            ->expects('coinStatus')
+            ->with('2')
+            ->once()
+            ->andThrows(new ServiceUnavailableHttpException(0, 'Service unavailable'));
+
+        $response = $this->get('/api/coin/status/2');
+
+        $response->assertStatus(Response::HTTP_SERVICE_UNAVAILABLE)->assertExactJson(['error' => 'Service unavailable']);
+    }
+
+    /**
+     * @test
+     */
+    public function coinNotFoundWhenIDIntroduced()
+    {
+        $this->cryptoCurrenciesDataSource
+            ->expects('coinStatus')
+            ->with('2')
+            ->once()
+            ->andThrows(new NotFoundHttpException('Coin not found'));
+
+        $response = $this->get('/api/coin/status/2');
+
+        $response->assertStatus(Response::HTTP_NOT_FOUND)->assertExactJson(['error' => 'Coin not found']);
+    }
 }
