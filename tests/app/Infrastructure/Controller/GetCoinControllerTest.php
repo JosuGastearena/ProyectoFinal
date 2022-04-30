@@ -64,7 +64,6 @@ class GetCoinControllerTest extends TestCase
             ->andThrows(new ServiceUnavailableHttpException(0, 'Service unavailable'));
 
         $response = $this->get('/api/coin/status/2');
-
         $response->assertStatus(Response::HTTP_SERVICE_UNAVAILABLE)->assertExactJson(['error' => 'Service unavailable']);
     }
 }
