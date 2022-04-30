@@ -39,6 +39,5 @@ class GetCoinServiceTest extends TestCase
 
         $expectedCoin = $this->getCoinService->execute('1');
         $this->assertEquals($coin, $expectedCoin);
-
     }
 }
