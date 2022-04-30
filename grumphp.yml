@@ -1,12 +1,7 @@
 grumphp:
     tasks:
       phpunit: null
-      phpcsfixer:
-        cache_file: ~
-        config: ~
-        rules: [ PSR12 ]
-        using_cache: ~
-        verbose: true
+
     fixer:
       enabled: true
       fix_by_default: true
