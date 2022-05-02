@@ -3,6 +3,7 @@
 namespace Tests\app\Infrastructure\Controller;
 
 use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
+use App\Application\CryptoCurrenciesDataSource\CurrenciesDataSource;
 use App\Domain\Coin;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -81,6 +82,6 @@ class GetCoinControllerTest extends TestCase
 
         $response = $this->get('/api/coin/status/2');
 
-        $response->assertStatus(Response::HTTP_NOT_FOUND)->assertExactJson(['error' => 'Coin not found']);
+        $response->assertStatus(Response::HTTP_NOT_FOUND)->assertExactJson(['error' => 'A coin with the specified ID was not found']);
     }
 }

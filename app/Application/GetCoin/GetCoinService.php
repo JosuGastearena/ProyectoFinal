@@ -2,10 +2,10 @@
 
 namespace App\Application\GetCoin;
 
+
 use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
 use App\Domain\Coin;
 use Exception;
-use Illuminate\Http\JsonResponse;
 use PHPUnit\Util\Json;
 
 class GetCoinService
@@ -26,13 +26,10 @@ class GetCoinService
 
     /**
      * @param string $coinID
-     * @return Json
-     * @throws Exception
+     * @return Coin
      */
     public function execute(string $coinID): Coin
     {
-        $coin = $this->cryptoCurrenciesDataSource->coinStatus($coinID);
-
-        return $coin;
+        return $this->cryptoCurrenciesDataSource->coinStatus($coinID);
     }
 }
