@@ -3,6 +3,7 @@
 namespace Tests\app\Application\GetCoin;
 
 use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
+use App\Application\CryptoCurrenciesDataSource\CurrenciesDataSource;
 use App\Application\GetCoin\GetCoinService;
 use App\Domain\Coin;
 use Illuminate\Http\Response;
