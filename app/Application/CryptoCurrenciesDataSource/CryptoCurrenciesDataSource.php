@@ -3,8 +3,12 @@
 namespace App\Application\CryptoCurrenciesDataSource;
 
 use App\Domain\Coin;
+use App\Domain\Wallet;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Schema;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+use Illuminate\Support\Facades\Cache;
 
 
 class CryptoCurrenciesDataSource implements CurrenciesDataSource
@@ -20,5 +24,24 @@ class CryptoCurrenciesDataSource implements CurrenciesDataSource
             throw new NotFoundHttpException();
         }
         return $coin;
+    }
+
+    public function openWallet(): Wallet
+    {
+        /*
+        Schema::create('cache', function ($table) {
+            $table->string('id_wallet')->unique();
+            $table->array('list_coin');
+            $table->integer('expiration');
+        });
+        */
+
+        $id_wallet = (string) rand(1, 1000);
+        while (Cache::get($id_wallet) != null) {
+            $id_wallet = (string) rand(1, 1000);
+        }
+        $wallet = new Wallet($id_wallet);
+        Cache::put($wallet->getWalletId(), $wallet->getListCoin());
+        return $wallet;
     }
 }
