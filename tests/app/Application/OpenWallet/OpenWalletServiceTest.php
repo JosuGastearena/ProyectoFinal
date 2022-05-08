@@ -1,16 +1,17 @@
 <?php
 
-namespace Tests\app\Infrastructure\Controller;
+namespace Tests\app\Application\OpenWallet;
 
 use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
+use App\Application\Wallet\OpenWalletService;
 use App\Domain\Wallet;
-use Illuminate\Http\Response;
 use Mockery;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
-use Tests\TestCase;
 
-class OpenWalletControllerTest extends TestCase
+class OpenWalletServiceTest extends TestCase
 {
+    private OpenWalletService $openWalletService;
     private CryptoCurrenciesDataSource $cryptoCurrenciesDataSource;
 
     /**
@@ -21,7 +22,7 @@ class OpenWalletControllerTest extends TestCase
         parent::setUp();
 
         $this->cryptoCurrenciesDataSource = Mockery::mock(CryptoCurrenciesDataSource::class);
-        $this->app->bind(CryptoCurrenciesDataSource::class, fn () => $this->cryptoCurrenciesDataSource);
+        $this->openWalletService = new OpenWalletService($this->cryptoCurrenciesDataSource);
     }
 
     /**
@@ -29,35 +30,30 @@ class OpenWalletControllerTest extends TestCase
      */
     public function openNewWallet()
     {
-        $wallet = new Wallet('1');
+        $wallet = new Wallet("1");
         $this->cryptoCurrenciesDataSource
             ->expects('openWallet')
-            ->with()
             ->once()
             ->andReturn($wallet);
 
-        $response = $this->post('/api/wallet/open');
-
-        $response->assertStatus(Response::HTTP_OK)->assertExactJson([
-            'wallet_id' => "1"
-        ]);
+        $expectedWallet = $this->openWalletService->execute();
+        $this->assertEquals($wallet, $expectedWallet);
     }
 
     /**
      * @test
      */
-    public function serviceUnavailableWhenOpeningWallet()
+    public function serviceUnavailable()
     {
+        $wallet = new Wallet("1");
         $this->cryptoCurrenciesDataSource
             ->expects('openWallet')
             ->once()
             ->andThrows(new ServiceUnavailableHttpException(0, 'Service unavailable'));
 
-        $response = $this->post('/api/wallet/open');
+        $this->expectException(ServiceUnavailableHttpException::class);
 
-        $response->assertStatus(Response::HTTP_SERVICE_UNAVAILABLE)->assertExactJson(['error' => 'Service unavailable']);
+        $this->openWalletService->execute();
     }
-
-
 
 }

@@ -22,8 +22,13 @@ class OpenWalletController extends BaseController
 
     public function __invoke(): JsonResponse
     {
-        $wallet = $this->openWalletService->execute();
-
+        try {
+            $wallet = $this->openWalletService->execute();
+        } catch (ServiceUnavailableHttpException $exception) {
+            return response()->json([
+                'error' => $exception->getMessage()
+            ], Response::HTTP_SERVICE_UNAVAILABLE);
+        }
         return response()->json([
             'wallet_id' => $wallet->getWalletId()
         ], Response::HTTP_OK);
