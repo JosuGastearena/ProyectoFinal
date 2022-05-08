@@ -7,6 +7,7 @@ use App\Application\Wallet\OpenWalletService;
 use App\Domain\Wallet;
 use Mockery;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
 class OpenWalletServiceTest extends TestCase
 {
@@ -37,6 +38,22 @@ class OpenWalletServiceTest extends TestCase
 
         $expectedWallet = $this->openWalletService->execute();
         $this->assertEquals($wallet, $expectedWallet);
+    }
+
+    /**
+     * @test
+     */
+    public function serviceUnavailable()
+    {
+        $wallet = new Wallet("1");
+        $this->cryptoCurrenciesDataSource
+            ->expects('openWallet')
+            ->once()
+            ->andThrows(new ServiceUnavailableHttpException(0, 'Service unavailable'));
+
+        $this->expectException(ServiceUnavailableHttpException::class);
+
+        $this->openWalletService->execute();
     }
 
 }
