@@ -46,7 +46,7 @@ class OpenWalletControllerTest extends TestCase
     /**
      * @test
      */
-    public function serviceUnavailable()
+    public function serviceUnavailableWhenOpeningWallet()
     {
         $this->cryptoCurrenciesDataSource
             ->expects('openWallet')
