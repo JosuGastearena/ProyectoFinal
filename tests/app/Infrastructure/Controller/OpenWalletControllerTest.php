@@ -6,6 +6,7 @@ use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
 use App\Domain\Wallet;
 use Illuminate\Http\Response;
 use Mockery;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Tests\TestCase;
 
 class OpenWalletControllerTest extends TestCase
@@ -41,5 +42,22 @@ class OpenWalletControllerTest extends TestCase
             'wallet_id' => "1"
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function serviceUnavailable()
+    {
+        $this->cryptoCurrenciesDataSource
+            ->expects('openWallet')
+            ->once()
+            ->andThrows(new ServiceUnavailableHttpException(0, 'Service unavailable'));
+
+        $response = $this->post('/api/wallet/open');
+
+        $response->assertStatus(Response::HTTP_SERVICE_UNAVAILABLE)->assertExactJson(['error' => 'Service unavailable']);
+    }
+
+
 
 }
