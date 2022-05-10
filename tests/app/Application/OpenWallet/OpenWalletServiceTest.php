@@ -30,7 +30,7 @@ class OpenWalletServiceTest extends TestCase
      */
     public function openNewWallet()
     {
-        $wallet = new Wallet("1");
+        $wallet = new Wallet("1", []);
         $this->cryptoCurrenciesDataSource
             ->expects('openWallet')
             ->once()
@@ -45,7 +45,7 @@ class OpenWalletServiceTest extends TestCase
      */
     public function serviceUnavailable()
     {
-        $wallet = new Wallet("1");
+        $wallet = new Wallet("1", []);
         $this->cryptoCurrenciesDataSource
             ->expects('openWallet')
             ->once()

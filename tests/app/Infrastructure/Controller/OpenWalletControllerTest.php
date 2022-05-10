@@ -29,7 +29,7 @@ class OpenWalletControllerTest extends TestCase
      */
     public function openNewWallet()
     {
-        $wallet = new Wallet('1');
+        $wallet = new Wallet('1', []);
         $this->cryptoCurrenciesDataSource
             ->expects('openWallet')
             ->with()
