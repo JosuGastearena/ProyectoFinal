@@ -7,9 +7,11 @@ use App\Application\CryptoCurrenciesDataSource\CurrenciesDataSource;
 use App\Application\Wallet\GetWalletService;
 use App\Application\Wallet\OpenWalletService;
 use App\Domain\Coin;
+use App\Domain\CryptoCurrenciesCache;
 use App\Domain\Wallet;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 use Mockery;
 use PHPUnit\Util\Json;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -52,7 +54,6 @@ class GetWalletServiceTest extends TestCase
             ->andReturn($wallet);
         $expectedWallet = $this->getWalletService->execute('1');
         $this->assertEquals($wallet, $expectedWallet);
-
     }
 
     /**
