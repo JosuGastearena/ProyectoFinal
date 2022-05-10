@@ -30,8 +30,14 @@ class CryptoCurrenciesDataSource implements CurrenciesDataSource
         while (Cache::get($id_wallet) != null) {
             $id_wallet = (string) rand(1, 1000);
         }
-        $wallet = new Wallet($id_wallet);
+        $wallet = new Wallet($id_wallet, [[]]);
         Cache::put($wallet->getWalletId(), $wallet->getListCoin());
+        return $wallet;
+    }
+
+    public function getsWalletCryptocurrencies(string $walletID):Wallet
+    {
+        $wallet = new Wallet($walletID,  Cache::get($walletID));
         return $wallet;
     }
 }

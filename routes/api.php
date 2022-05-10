@@ -2,6 +2,7 @@
 
 use App\Infrastructure\Controllers\GetCoinController;
 use App\Infrastructure\Controllers\GetUserController;
+use App\Infrastructure\Controllers\GetWalletController;
 use App\Infrastructure\Controllers\IsEarlyAdopterUserController;
 use App\Infrastructure\Controllers\OpenWalletController;
 use App\Infrastructure\Controllers\StatusController;
@@ -34,3 +35,4 @@ Route::get('user/id/{userId}', GetUserController::class);
 Route::get('coin/status/{coin_id}', GetCoinController::class);
 
 Route::post("/wallet/open",OpenWalletController::class);
+Route::get('wallet/{wallet_id}', GetWalletController::class);
