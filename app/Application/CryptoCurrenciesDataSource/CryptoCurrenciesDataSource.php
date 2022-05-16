@@ -5,7 +5,6 @@ namespace App\Application\CryptoCurrenciesDataSource;
 use App\Domain\Coin;
 use App\Domain\CryptoCurrenciesCache;
 use App\Domain\Wallet;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -44,8 +43,12 @@ class CryptoCurrenciesDataSource implements CurrenciesDataSource
 
     public function buyCoin(string $coin_id, float $amount_usd): float
     {
-
         $coin = $this->coinStatus($coin_id);
         return $amount_usd / floatval($coin->getPrice_usd());
+    }
+
+    public function getCache(): CryptoCurrenciesCache
+    {
+        return $this->cache;
     }
 }

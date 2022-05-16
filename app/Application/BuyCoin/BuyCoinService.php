@@ -2,7 +2,6 @@
 
 namespace App\Application\BuyCoin;
 
-
 use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
 use App\Domain\Coin;
 use Exception;
@@ -17,8 +16,12 @@ class BuyCoinService
         $this->cryptoCurrenciesDataSource = $cryptoCurrenciesDataSource;
     }
 
-    public function execute(string $coin_id, float $amount_usd): float
+    public function execute(string $coin_id, string $wallet_id, float $amount_usd): void
     {
-        return $this->cryptoCurrenciesDataSource->buyCoin($coin_id, $amount_usd);
+        $bought_amount = $this->cryptoCurrenciesDataSource->buyCoin($coin_id, $amount_usd);
+        $wallet = $this->cryptoCurrenciesDataSource->getsWalletCryptocurrencies($wallet_id);
+        $coin = $this->cryptoCurrenciesDataSource->coinStatus($coin_id);
+        $wallet->addCoin($coin, $bought_amount);
+        $this->cryptoCurrenciesDataSource->getCache()->set($wallet);
     }
 }

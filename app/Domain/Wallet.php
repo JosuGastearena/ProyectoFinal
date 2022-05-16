@@ -7,6 +7,7 @@ class Wallet
 
     private string $wallet_id;
     private array $list_coin;
+    private CryptoCurrenciesCache $cache;
 
     public function __construct(string $wallet_id, array $list_coin)
     {
@@ -38,5 +39,6 @@ class Wallet
         if($indexCoin == -1){
             $this->list_coin[] = [$coin, $amount];
         }
+        $this->cache->set($this);
     }
 }

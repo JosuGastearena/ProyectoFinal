@@ -16,14 +16,10 @@ use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 class BuyCoinController extends BaseController
 {
     private BuyCoinService $buyCoinService;
-    private GetWalletService $getWalletService;
-    private GetCoinService $getCoinService;
 
-    public function __construct(BuyCoinService $buyCoinService, GetWalletService $getWalletService, GetCoinService $getCoinService)
+    public function __construct(BuyCoinService $buyCoinService)
     {
         $this->buyCoinService = $buyCoinService;
-        $this->getWalletService = $getWalletService;
-        $this->getCoinService = $getCoinService;
     }
 
     public function __invoke(Request $request): JsonResponse
@@ -42,10 +38,7 @@ class BuyCoinController extends BaseController
             ], Response::HTTP_BAD_REQUEST);
         }
         try {
-            $bought_amount = $this->buyCoinService->execute($request->input("coin_id"), $request->input("amount_usd"));
-            $wallet = $this->getWalletService->execute($request->input("wallet_id"));
-            $coin = $this->getCoinService->execute($request->input("coin_id"));
-            $wallet->addCoin($coin, $bought_amount);
+            $this->buyCoinService->execute($request->input("coin_id"), $request->input("wallet_id"), $request->input("amount_usd"));
         } catch (ServiceUnavailableHttpException $exception) {
             return response()->json([
                 'error' => $exception->getMessage()
@@ -56,7 +49,7 @@ class BuyCoinController extends BaseController
             ], Response::HTTP_NOT_FOUND);
         }
         return response()->json([
-            "bought_amount" => $bought_amount
+            "Status" => "success"
         ], Response::HTTP_OK);
     }
 }
