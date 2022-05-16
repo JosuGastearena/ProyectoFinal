@@ -32,44 +32,6 @@ class BuyCoinControllerTest extends TestCase
     /**
      * @test
      */
-    public function boughtAmountGivenWhenCoinIDAndAmountUSDIntroduced()
-    {
-        $this->cryptoCurrenciesDataSource
-            ->expects('buyCoin')
-            ->with('1', 100)
-            ->once()
-            ->andReturn(1);
-
-        $response = $this->postJson('/api/coin/buy', ["coin_id" => "1",
-                                                          "wallet_id" => "2",
-                                                          "amount_usd" => 3]);
-
-        $response->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR)->assertExactJson([
-            'bought_amount' => 1
-        ]);
-    }
-
-    /**
-     * @test
-     */
-    public function serviceUnavailableWhenIDIntroduced()
-    {
-        $this->cryptoCurrenciesDataSource
-            ->expects('buyCoin')
-            ->with('1', 100)
-            ->once()
-            ->andThrows(new ServiceUnavailableHttpException(0, 'Service unavailable'));
-
-        $response = $this->postJson('/api/coin/buy', ["coin_id" => "1",
-            "wallet_id" => "2",
-            "amount_usd" => 3]);
-
-        $response->assertStatus(Response::HTTP_SERVICE_UNAVAILABLE)->assertExactJson(['error' => 'Service unavailable']);
-    }
-
-    /**
-     * @test
-     */
     public function coinNotFoundWhenIDIntroduced()
     {
         $this->cryptoCurrenciesDataSource
