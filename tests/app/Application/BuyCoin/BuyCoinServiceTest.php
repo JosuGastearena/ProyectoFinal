@@ -66,7 +66,7 @@ class BuyCoinServiceTest extends TestCase
 
         $this->cryptoCurrenciesDataSource
             ->expects('addWallet')
-            ->with($wallet_id)
+            ->with($wallet)
             ->once()
             ->andReturn();
 
