@@ -51,4 +51,9 @@ class CryptoCurrenciesDataSource implements CurrenciesDataSource
     {
         return $this->cache;
     }
+
+    public function addWallet($wallet_id): void
+    {
+        $this->cache->set($this->getsWalletCryptocurrencies($wallet_id));
+    }
 }

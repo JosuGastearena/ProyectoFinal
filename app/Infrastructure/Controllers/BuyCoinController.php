@@ -49,7 +49,7 @@ class BuyCoinController extends BaseController
             ], Response::HTTP_NOT_FOUND);
         }
         return response()->json([
-            "Status" => "success"
+            "status" => "Success"
         ], Response::HTTP_OK);
     }
 }
