@@ -22,6 +22,6 @@ class BuyCoinService
         $wallet = $this->cryptoCurrenciesDataSource->getsWalletCryptocurrencies($wallet_id);
         $coin = $this->cryptoCurrenciesDataSource->coinStatus($coin_id);
         $wallet->addCoin($coin, $bought_amount);
-        $this->cryptoCurrenciesDataSource->getCache()->set($wallet);
+        $this->cryptoCurrenciesDataSource->addWallet($wallet_id);
     }
 }
