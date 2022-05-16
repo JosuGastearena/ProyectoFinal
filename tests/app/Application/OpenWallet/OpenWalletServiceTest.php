@@ -4,6 +4,8 @@ namespace Tests\app\Application\OpenWallet;
 
 use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
 use App\Application\Wallet\OpenWalletService;
+use App\Domain\Coin;
+use App\Domain\CryptoCurrenciesCache;
 use App\Domain\Wallet;
 use Mockery;
 use PHPUnit\Framework\TestCase;
@@ -56,4 +58,27 @@ class OpenWalletServiceTest extends TestCase
         $this->openWalletService->execute();
     }
 
+    /**
+     * @test
+     */
+    public function returnWalletCacheTest()
+    {
+        $coin = new Coin("1", "*", "Crypt", "1", 1, "100");
+        $coin2 = new Coin("2", "€", "Crypt2", "2", 2, "1000");
+
+        $cache = new CryptoCurrenciesCache();
+
+        $wallet = $cache->openWallet();
+
+        $wallet->addCoin($coin, 4);
+        $wallet->addCoin($coin2, 2);
+
+        $cache->set($wallet);
+
+        $wallet2 = $cache->get($wallet->getWalletId());
+
+        $this->assertEquals($wallet, $wallet2);
+
+        print_r($wallet2->getListCoin());
+    }
 }

@@ -14,6 +14,7 @@ class CryptoCurrenciesCache
         Schema::create('cache', function ($table) {
             $table->string('id_wallet')->unique();
             $table->array('list_coin');
+            $table->integer('expiration');
         });
         */
     }
