@@ -4,6 +4,7 @@ namespace App\Infrastructure\Controllers;
 
 use App\Application\BuyCoin\BuyCoinService;
 use App\Application\GetCoin\GetCoinService;
+use App\Application\Wallet\GetWalletService;
 use Barryvdh\Debugbar\Controllers\BaseController;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -15,10 +16,14 @@ use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 class BuyCoinController extends BaseController
 {
     private BuyCoinService $buyCoinService;
+    private GetWalletService $getWalletService;
+    private GetCoinService $getCoinService;
 
-    public function __construct(BuyCoinService $buyCoinService)
+    public function __construct(BuyCoinService $buyCoinService, GetWalletService $getWalletService, GetCoinService $getCoinService)
     {
         $this->buyCoinService = $buyCoinService;
+        $this->getWalletService = $getWalletService;
+        $this->getCoinService = $getCoinService;
     }
 
     public function __invoke(Request $request): JsonResponse
@@ -38,6 +43,9 @@ class BuyCoinController extends BaseController
         }
         try {
             $bought_amount = $this->buyCoinService->execute($request->input("coin_id"), $request->input("amount_usd"));
+            $wallet = $this->getWalletService->execute($request->input("wallet_id"));
+            $coin = $this->getCoinService->execute($request->input("coin_id"));
+            $wallet->addCoin($coin, $bought_amount);
         } catch (ServiceUnavailableHttpException $exception) {
             return response()->json([
                 'error' => $exception->getMessage()
