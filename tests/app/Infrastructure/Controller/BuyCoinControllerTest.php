@@ -32,25 +32,6 @@ class BuyCoinControllerTest extends TestCase
     /**
      * @test
      */
-    public function coinNotFoundWhenIDIntroduced()
-    {
-        $this->cryptoCurrenciesDataSource
-            ->expects('buyCoin')
-            ->with('2', 100)
-            ->once()
-            ->andThrows(new NotFoundHttpException('Coin not found'));
-
-        $response = $this->postJson('/api/coin/buy', ["coin_id" => "1",
-            "wallet_id" => "2",
-            "amount_usd" => 3]);
-
-        $response->assertStatus(Response::HTTP_NOT_FOUND)->assertExactJson(['error' => 'A coin with the specified ID was not found']);
-    }
-
-
-    /**
-     * @test
-     */
     public function ExceptionGivenWhenCoinIDNotIntroduced()
     {
         $this->cryptoCurrenciesDataSource
