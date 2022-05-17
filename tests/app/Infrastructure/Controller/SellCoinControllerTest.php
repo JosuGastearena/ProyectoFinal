@@ -33,7 +33,7 @@ class SellCoinControllerTest extends TestCase
     /**
      * @test
      */
-    public function boughtAmountGivenWhenCoinIDAndAmountUSDIntroduced()
+    public function soldGivenCoinAmount()
     {
         $coin_id = "1";
         $wallet_id = "2";
@@ -75,4 +75,23 @@ class SellCoinControllerTest extends TestCase
             'status' => "Success"
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function serviceUnavailableWhenIDIntroduced()
+    {
+        $this->cryptoCurrenciesDataSource
+            ->expects('sellCoin')
+            ->with('1', 100)
+            ->once()
+            ->andThrows(new ServiceUnavailableHttpException(0, 'Service unavailable'));
+
+        $response = $this->postJson('/api/coin/sell', ["coin_id" => "1",
+            "wallet_id" => "2",
+            "amount_usd" => 100]);
+
+        $response->assertStatus(Response::HTTP_SERVICE_UNAVAILABLE)->assertExactJson(['error' => 'Service unavailable']);
+    }
+
 }

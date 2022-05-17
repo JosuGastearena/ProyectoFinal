@@ -25,7 +25,13 @@ class SellCoinController extends BaseController
 
     public function __invoke(Request $request): JsonResponse
     {
-        $this->sellCoinService->execute($request->input("coin_id"), $request->input("wallet_id"), $request->input("amount_usd"));
+        try {
+            $this->sellCoinService->execute($request->input("coin_id"), $request->input("wallet_id"), $request->input("amount_usd"));
+        } catch (ServiceUnavailableHttpException $exception) {
+            return response()->json([
+                'error' => $exception->getMessage()
+            ], Response::HTTP_SERVICE_UNAVAILABLE);
+        }
         return response()->json([
             "status" => "Success"
         ], Response::HTTP_OK);
