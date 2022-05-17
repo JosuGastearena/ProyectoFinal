@@ -48,7 +48,11 @@ class Wallet
         $indexCoin = -1;
         for($i=0;$i<count($this->list_coin);$i++){
             if($this->list_coin[$i][0]->getCoin_id() == $coin->getCoin_id()){
-                $this->list_coin[$i][1] -= $amount;
+                if ($this->list_coin[$i][1] == $amount) {
+                    unset($this->list_coin[$i]);
+                } else {
+                    $this->list_coin[$i][1] -= $amount;
+                }
                 $indexCoin = $i;
                 break;
             }
