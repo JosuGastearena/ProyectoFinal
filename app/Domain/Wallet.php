@@ -2,6 +2,9 @@
 
 namespace App\Domain;
 
+use Facade\FlareClient\Http\Exceptions\NotFound;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 class Wallet
 {
 
@@ -37,6 +40,21 @@ class Wallet
         }
         if($indexCoin == -1){
             $this->list_coin[] = [$coin, $amount];
+        }
+    }
+
+    public function sellCoin(Coin $coin, float $amount): void
+    {
+        $indexCoin = -1;
+        for($i=0;$i<count($this->list_coin);$i++){
+            if($this->list_coin[$i][0]->getCoin_id() == $coin->getCoin_id()){
+                $this->list_coin[$i][1] -= $amount;
+                $indexCoin = $i;
+                break;
+            }
+        }
+        if($indexCoin == -1){
+            throw new NotFoundHttpException('A coin with the specified ID was not found');
         }
     }
 }
