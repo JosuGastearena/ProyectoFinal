@@ -12,7 +12,6 @@
             <directory suffix="Test.php">./tests/app/Application/GetWalletBalance</directory>
             <directory suffix="Test.php">./tests/app/Application/OpenWallet</directory>
             <directory suffix="Test.php">./tests/app/Application/SellCoin</directory>
-            <directory suffix="Test.php">./tests/app/Application/EarlyAdopter</directory>
         </testsuite>
         <testsuite name="Integration">
             <directory suffix="Test.php">./tests/app/Infrastructure/Controller</directory>

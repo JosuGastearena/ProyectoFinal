@@ -3,16 +3,12 @@
 namespace Tests\app\Infrastructure\Controller;
 
 use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
-use App\Application\CryptoCurrenciesDataSource\CurrenciesDataSource;
 use App\Domain\Coin;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Mockery;
-use PHPUnit\Util\Json;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Tests\TestCase;
-use Exception;
 
 class GetCoinControllerTest extends TestCase
 {

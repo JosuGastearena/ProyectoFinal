@@ -4,8 +4,6 @@ namespace Tests\app\Application\OpenWallet;
 
 use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
 use App\Application\Wallet\OpenWalletService;
-use App\Domain\Coin;
-use App\Domain\CryptoCurrenciesCache;
 use App\Domain\Wallet;
 use Mockery;
 use PHPUnit\Framework\TestCase;

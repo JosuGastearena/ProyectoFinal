@@ -3,22 +3,13 @@
 namespace Tests\app\Application\GetWalletBalance;
 
 use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
-use App\Application\CryptoCurrenciesDataSource\CurrenciesDataSource;
 use App\Application\Wallet\GetWalletBalanceService;
-use App\Application\Wallet\GetWalletService;
-use App\Application\Wallet\OpenWalletService;
 use App\Domain\Coin;
-use App\Domain\CryptoCurrenciesCache;
 use App\Domain\Wallet;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Cache;
 use Mockery;
-use PHPUnit\Util\Json;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Tests\TestCase;
-use Exception;
 
 class GetWalletBalanceServiceTest extends TestCase
 {
