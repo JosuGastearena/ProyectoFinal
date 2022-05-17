@@ -43,6 +43,16 @@ class CryptoCurrenciesDataSource implements CurrenciesDataSource
 
     public function buyCoin(string $coin_id, float $amount_usd): float
     {
+        return $this->transaction($coin_id, $amount_usd);
+    }
+
+    public function sellCoin(string $coin_id, float $amount_usd): float
+    {
+        return $this->transaction($coin_id, $amount_usd);
+    }
+
+    private function transaction(string $coin_id, float $amount_usd): float
+    {
         $coin = $this->coinStatus($coin_id);
         return $amount_usd / floatval($coin->getPrice_usd());
     }
