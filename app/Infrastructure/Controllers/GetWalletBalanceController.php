@@ -29,6 +29,10 @@ class GetWalletBalanceController extends BaseController
             return response()->json([
                 'error' => $exception->getMessage()
             ], Response::HTTP_SERVICE_UNAVAILABLE);
+        } catch (NotFoundHttpException $exception) {
+            return response()->json([
+                'error' =>'A wallet with the specified ID was not found'
+            ], Response::HTTP_NOT_FOUND);
         }
         return response()->json([
             "balance_usd" => $balance

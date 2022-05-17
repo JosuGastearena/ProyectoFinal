@@ -73,4 +73,19 @@ class GetWalletBalanceServiceTest extends TestCase
         $this->getWalletBalanceService->execute('1');
     }
 
+    /**
+     * @test
+     */
+    public function walletNotFound()
+    {
+        $this->cryptoCurrenciesDataSource
+            ->expects('getsWalletBalance')
+            ->with('1')
+            ->once()
+            ->andThrows(new NotFoundHttpException('Coin not found'));
+
+        $this->expectException(NotFoundHttpException::class);
+
+        $this->getWalletBalanceService->execute('1');
+    }
 }
