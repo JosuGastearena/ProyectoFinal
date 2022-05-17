@@ -111,4 +111,58 @@ class SellCoinControllerTest extends TestCase
 
         $response->assertStatus(Response::HTTP_NOT_FOUND)->assertExactJson(['error' => 'A coin with the specified ID was not found']);
     }
+
+    /**
+     * @test
+     */
+    public function exceptionGivenWhenCoinIDNotIntroduced()
+    {
+        $this->cryptoCurrenciesDataSource
+            ->expects('sellCoin')
+            ->with('1', 100)
+            ->never();
+
+
+        $response = $this->postJson('/api/coin/sell', [
+            "wallet_id" => "2",
+            "amount_usd" => 3]);
+
+        $response->assertStatus(Response::HTTP_BAD_REQUEST)->assertExactJson(['error' => 'coin_id not introduced']);
+    }
+
+    /**
+     * @test
+     */
+    public function exceptionGivenWhenWalletIDNotIntroduced()
+    {
+        $this->cryptoCurrenciesDataSource
+            ->expects('sellCoin')
+            ->with('1', 100)
+            ->never();
+
+
+        $response = $this->postJson('/api/coin/sell', ["coin_id" => "1",
+
+            "amount_usd" => 3]);
+
+        $response->assertStatus(Response::HTTP_BAD_REQUEST)->assertExactJson(['error' => 'wallet_id not introduced']);
+    }
+
+    /**
+     * @test
+     */
+    public function exceptionGivenWhenAmountUSDNotIntroduced()
+    {
+        $this->cryptoCurrenciesDataSource
+            ->expects('sellCoin')
+            ->with('1', 100)
+            ->never();
+
+
+        $response = $this->postJson('/api/coin/sell', ["coin_id" => "1",
+            "wallet_id" => "2"
+        ]);
+
+        $response->assertStatus(Response::HTTP_BAD_REQUEST)->assertExactJson(['error' => 'amount_usd not introduced']);
+    }
 }

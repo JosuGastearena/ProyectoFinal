@@ -25,6 +25,19 @@ class SellCoinController extends BaseController
 
     public function __invoke(Request $request): JsonResponse
     {
+        if (!$request->has("coin_id")) {
+            return response()->json([
+                'error' => 'coin_id not introduced'
+            ], Response::HTTP_BAD_REQUEST);
+        } elseif (!$request->has("wallet_id")) {
+            return response()->json([
+                'error' => 'wallet_id not introduced'
+            ], Response::HTTP_BAD_REQUEST);
+        } elseif (!$request->has("amount_usd")) {
+            return response()->json([
+                'error' => 'amount_usd not introduced'
+            ], Response::HTTP_BAD_REQUEST);
+        }
         try {
             $this->sellCoinService->execute($request->input("coin_id"), $request->input("wallet_id"), $request->input("amount_usd"));
         } catch (ServiceUnavailableHttpException $exception) {
