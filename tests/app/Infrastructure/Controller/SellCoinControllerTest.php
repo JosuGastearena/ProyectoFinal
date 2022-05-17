@@ -94,4 +94,21 @@ class SellCoinControllerTest extends TestCase
         $response->assertStatus(Response::HTTP_SERVICE_UNAVAILABLE)->assertExactJson(['error' => 'Service unavailable']);
     }
 
+    /**
+     * @test
+     */
+    public function coinNotFoundWhenIDIntroduced()
+    {
+        $this->cryptoCurrenciesDataSource
+            ->expects('sellCoin')
+            ->with('1', 100)
+            ->once()
+            ->andThrows(new NotFoundHttpException('Coin not found'));
+
+        $response = $this->postJson('/api/coin/sell', ["coin_id" => "1",
+            "wallet_id" => "2",
+            "amount_usd" => 100]);
+
+        $response->assertStatus(Response::HTTP_NOT_FOUND)->assertExactJson(['error' => 'A coin with the specified ID was not found']);
+    }
 }
