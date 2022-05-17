@@ -23,7 +23,13 @@ class GetWalletBalanceController extends BaseController
 
     public function __invoke(string $walletID): JsonResponse
     {
-        $balance = $this->getWalletBalanceService->execute($walletID);
+        try {
+            $balance = $this->getWalletBalanceService->execute($walletID);
+        } catch (ServiceUnavailableHttpException $exception) {
+            return response()->json([
+                'error' => $exception->getMessage()
+            ], Response::HTTP_SERVICE_UNAVAILABLE);
+        }
         return response()->json([
             "balance_usd" => $balance
         ], Response::HTTP_OK);

@@ -55,4 +55,19 @@ class GetWalletBalanceControllerTest extends TestCase
         ]);
     }
 
+    /**
+     * @test
+     */
+    public function serviceUnavailableWhenIDIntroduced()
+    {
+        $this->cryptoCurrenciesDataSource
+            ->expects('getsWalletBalance')
+            ->with('1')
+            ->once()
+            ->andThrows(new ServiceUnavailableHttpException(0, 'Service unavailable'));
+
+        $response = $this->get('/api/wallet/1/balance');
+
+        $response->assertStatus(Response::HTTP_SERVICE_UNAVAILABLE)->assertExactJson(['error' => 'Service unavailable']);
+    }
 }

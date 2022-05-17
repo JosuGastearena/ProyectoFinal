@@ -57,4 +57,20 @@ class GetWalletBalanceServiceTest extends TestCase
         $this->assertEquals($wallet->getBalance(), $expectedBalance);
     }
 
+    /**
+     * @test
+     */
+    public function serviceUnavailable()
+    {
+        $this->cryptoCurrenciesDataSource
+            ->expects('getsWalletBalance')
+            ->with('1')
+            ->once()
+            ->andThrows(new ServiceUnavailableHttpException(0, 'Service unavailable'));
+
+        $this->expectException(ServiceUnavailableHttpException::class);
+
+        $this->getWalletBalanceService->execute('1');
+    }
+
 }
