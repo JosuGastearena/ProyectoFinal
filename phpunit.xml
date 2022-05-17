@@ -6,6 +6,12 @@
 >
     <testsuites>
         <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/app/Application/BuyCoin</directory>
+            <directory suffix="Test.php">./tests/app/Application/GetCoin</directory>
+            <directory suffix="Test.php">./tests/app/Application/GetWallet</directory>
+            <directory suffix="Test.php">./tests/app/Application/GetWalletBalance</directory>
+            <directory suffix="Test.php">./tests/app/Application/OpenWallet</directory>
+            <directory suffix="Test.php">./tests/app/Application/SellCoin</directory>
             <directory suffix="Test.php">./tests/app/Application/EarlyAdopter</directory>
         </testsuite>
         <testsuite name="Integration">
