@@ -12,4 +12,5 @@ interface CurrenciesDataSource
     public function getsWalletCryptocurrencies(string $id_wallet): Wallet;
     public function buyCoin(string $coin_id, float $amount_usd): float;
     public function sellCoin(string $coin_id, float $amount_usd): float;
+    public function getsWalletBalance(string $wallet_id): float;
 }

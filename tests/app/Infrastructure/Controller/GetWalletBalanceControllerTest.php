@@ -1,17 +1,13 @@
 <?php
 
-namespace Tests\app\Application\GetWallet;
+namespace Tests\app\Infrastructure\Controller;
 
 use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
 use App\Application\CryptoCurrenciesDataSource\CurrenciesDataSource;
-use App\Application\Wallet\GetWalletService;
-use App\Application\Wallet\OpenWalletService;
 use App\Domain\Coin;
-use App\Domain\CryptoCurrenciesCache;
 use App\Domain\Wallet;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Cache;
 use Mockery;
 use PHPUnit\Util\Json;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -19,9 +15,8 @@ use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Tests\TestCase;
 use Exception;
 
-class GetWalletServiceTest extends TestCase
+class GetWalletBalanceControllerTest extends TestCase
 {
-    private GetWalletService $getWalletService;
     private CryptoCurrenciesDataSource $cryptoCurrenciesDataSource;
 
     /**
@@ -32,13 +27,13 @@ class GetWalletServiceTest extends TestCase
         parent::setUp();
 
         $this->cryptoCurrenciesDataSource = Mockery::mock(CryptoCurrenciesDataSource::class);
-        $this->getWalletService = new GetWalletService($this->cryptoCurrenciesDataSource);
+        $this->app->bind(CryptoCurrenciesDataSource::class, fn () => $this->cryptoCurrenciesDataSource);
     }
 
     /**
      * @test
      */
-    public function returnWallet()
+    public function walletBalanceGivenWhenIDIntroduced()
     {
         $coin = new Coin("1", "*", "Crypt", "1", 1, "100");
         $coin2 = new Coin("2", "€", "Crypt2", "2", 2, "1000");
@@ -48,43 +43,47 @@ class GetWalletServiceTest extends TestCase
         $wallet->addCoin($coin2, 2);
 
         $this->cryptoCurrenciesDataSource
-            ->expects('getsWalletCryptocurrencies')
+            ->expects('getsWalletBalance')
             ->with('1')
             ->once()
-            ->andReturn($wallet);
-        $expectedWallet = $this->getWalletService->execute('1');
-        $this->assertEquals($wallet, $expectedWallet);
+            ->andReturn(4 * $coin->getPrice_usd() + 2 * $coin2->getPrice_usd());
+
+        $response = $this->get('/api/wallet/1/balance');
+
+        $response->assertStatus(Response::HTTP_OK)->assertExactJson([
+            "balance_usd" => $wallet->getBalance(),
+        ]);
     }
 
     /**
      * @test
      */
-    public function serviceUnavailable()
+    public function serviceUnavailableWhenIDIntroduced()
     {
         $this->cryptoCurrenciesDataSource
-            ->expects('getsWalletCryptocurrencies')
+            ->expects('getsWalletBalance')
             ->with('1')
             ->once()
             ->andThrows(new ServiceUnavailableHttpException(0, 'Service unavailable'));
 
-        $this->expectException(ServiceUnavailableHttpException::class);
+        $response = $this->get('/api/wallet/1/balance');
 
-        $this->getWalletService->execute('1');
+        $response->assertStatus(Response::HTTP_SERVICE_UNAVAILABLE)->assertExactJson(['error' => 'Service unavailable']);
     }
 
     /**
      * @test
      */
-    public function walletNotFound()
+    public function walletNotFoundWhenIDIntroduced()
     {
         $this->cryptoCurrenciesDataSource
-            ->expects('getsWalletCryptocurrencies')
+            ->expects('getsWalletBalance')
             ->with('1')
             ->once()
             ->andThrows(new NotFoundHttpException('Coin not found'));
 
-        $this->expectException(NotFoundHttpException::class);
+        $response = $this->get('/api/wallet/1/balance');
 
-        $this->getWalletService->execute('1');
+        $response->assertStatus(Response::HTTP_NOT_FOUND)->assertExactJson(['error' => 'A wallet with the specified ID was not found']);
     }
 }

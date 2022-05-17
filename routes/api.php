@@ -2,6 +2,7 @@
 
 use App\Infrastructure\Controllers\GetCoinController;
 use App\Infrastructure\Controllers\GetUserController;
+use App\Infrastructure\Controllers\GetWalletBalanceController;
 use App\Infrastructure\Controllers\GetWalletController;
 use App\Infrastructure\Controllers\IsEarlyAdopterUserController;
 use App\Infrastructure\Controllers\OpenWalletController;
@@ -39,3 +40,4 @@ Route::post('coin/sell', SellCoinController::class);
 
 Route::post("wallet/open",OpenWalletController::class);
 Route::get('wallet/{wallet_id}', GetWalletController::class);
+Route::get('wallet/{wallet_id}/balance', GetWalletBalanceController::class);
