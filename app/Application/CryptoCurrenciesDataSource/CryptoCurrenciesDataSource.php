@@ -57,6 +57,11 @@ class CryptoCurrenciesDataSource implements CurrenciesDataSource
         return $amount_usd / floatval($coin->getPrice_usd());
     }
 
+    public function getsWalletBalance(string $wallet_id): float
+    {
+        return $this->getsWalletCryptocurrencies($wallet_id)->getBalance();
+    }
+
     public function getCache(): CryptoCurrenciesCache
     {
         return $this->cache;

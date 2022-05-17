@@ -34,7 +34,7 @@ class SellCoinServiceTest extends TestCase
     /**
      * @test
      */
-    public function boughtAmountGivenWhenCoinIDAndAmountUSDIntroduced()
+    public function soldGivenCoinAmount()
     {
         $coin_id = "1";
         $wallet_id = "2";

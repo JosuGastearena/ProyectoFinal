@@ -87,28 +87,4 @@ class GetWalletServiceTest extends TestCase
 
         $this->getWalletService->execute('1');
     }
-
-    /**
-     * @test
-     */
-    public function returnWalletCacheTest()
-    {
-        $coin = new Coin("1", "*", "Crypt", "1", 1, "100");
-        $coin2 = new Coin("2", "€", "Crypt2", "2", 2, "1000");
-
-        $cache = new CryptoCurrenciesCache();
-
-        $wallet = $cache->openWallet();
-
-        $wallet->addCoin($coin, 4);
-        $wallet->addCoin($coin2, 2);
-
-        $cache->set($wallet);
-
-        $wallet2 = $cache->get($wallet->getWalletId());
-
-        $this->assertEquals($wallet, $wallet2);
-
-        print_r($wallet2->getListCoin());
-    }
 }

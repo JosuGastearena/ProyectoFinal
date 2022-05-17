@@ -61,4 +61,13 @@ class Wallet
             throw new NotFoundHttpException('A coin with the specified ID was not found');
         }
     }
+
+    public function getBalance(): float
+    {
+        $balance = 0;
+        for($i=0;$i<count($this->list_coin);$i++) {
+            $balance += $this->list_coin[$i][0]->getPrice_usd() * $this->list_coin[$i][1];
+        }
+        return $balance;
+    }
 }
