@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Application\Wallet;
+namespace App\Application\Coin;
 
 use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
-use App\Domain\Wallet;
+use App\Domain\Coin;
 
-class GetWalletService
+class GetCoinService
 {
     private CryptoCurrenciesDataSource $cryptoCurrenciesDataSource;
 
@@ -14,8 +14,8 @@ class GetWalletService
         $this->cryptoCurrenciesDataSource = $cryptoCurrenciesDataSource;
     }
 
-    public function execute(string $wallet_id): Wallet
+    public function execute(string $coin_id): Coin
     {
-        return $this->cryptoCurrenciesDataSource->getsWalletCryptocurrencies($wallet_id);
+        return $this->cryptoCurrenciesDataSource->coinStatus($coin_id);
     }
 }

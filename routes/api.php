@@ -26,18 +26,10 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::get(
-    '/status',
-    StatusController::class
-);
-
-Route::get('user/{email}', IsEarlyAdopterUserController::class);
-Route::get('user/id/{userId}', GetUserController::class);
-
 Route::get('coin/status/{coin_id}', GetCoinController::class);
 Route::post('coin/buy', BuyCoinController::class);
 Route::post('coin/sell', SellCoinController::class);
 
-Route::post("wallet/open",OpenWalletController::class);
+Route::post("wallet/open", OpenWalletController::class);
 Route::get('wallet/{wallet_id}', GetWalletController::class);
 Route::get('wallet/{wallet_id}/balance', GetWalletBalanceController::class);

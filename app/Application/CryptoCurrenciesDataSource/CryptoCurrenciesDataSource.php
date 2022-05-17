@@ -8,7 +8,6 @@ use App\Domain\Wallet;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-
 class CryptoCurrenciesDataSource implements CurrenciesDataSource
 {
     private CryptoCurrenciesCache $cache;
@@ -21,11 +20,10 @@ class CryptoCurrenciesDataSource implements CurrenciesDataSource
     public function coinStatus(string $coin_id): Coin
     {
         $response = Http::get('https://api.coinlore.net/api/ticker/?id='.$coin_id);
-        try{
+        try {
             $data = json_decode($response, true);
             $coin = new Coin($data[0]['id'], $data[0]['symbol'], $data[0]['name'], $data[0]['nameid'], $data[0]['rank'], $data[0]['price_usd']);
-
-        }catch (\Exception $ex){
+        } catch (\Exception $ex) {
             throw new NotFoundHttpException();
         }
         return $coin;
@@ -60,11 +58,6 @@ class CryptoCurrenciesDataSource implements CurrenciesDataSource
     public function getsWalletBalance(string $wallet_id): float
     {
         return $this->getsWalletCryptocurrencies($wallet_id)->getBalance();
-    }
-
-    public function getCache(): CryptoCurrenciesCache
-    {
-        return $this->cache;
     }
 
     public function addWallet($wallet): void

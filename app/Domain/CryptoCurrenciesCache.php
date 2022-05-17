@@ -19,12 +19,12 @@ class CryptoCurrenciesCache
         */
     }
 
-    public function get($id_wallet): Wallet
+    public function get($wallet_id): Wallet
     {
-        if (!Cache::has($id_wallet)) {
+        if (!Cache::has($wallet_id)) {
             throw new NotFoundHttpException('Wallet not found');
         } else {
-            return new Wallet($id_wallet, Cache::get($id_wallet));
+            return new Wallet($wallet_id, Cache::get($wallet_id));
         }
     }
 
@@ -35,11 +35,11 @@ class CryptoCurrenciesCache
 
     public function openWallet(): Wallet
     {
-        $id_wallet = (string) rand(1, 1000);
-        while (Cache::get($id_wallet) != null) {
-            $id_wallet = (string) rand(1, 1000);
+        $wallet_id = (string) rand(1, 1000);
+        while (Cache::get($wallet_id) != null) {
+            $wallet_id = (string) rand(1, 1000);
         }
-        $wallet = new Wallet($id_wallet, []);
+        $wallet = new Wallet($wallet_id, []);
         $this->set($wallet);
         return $wallet;
     }

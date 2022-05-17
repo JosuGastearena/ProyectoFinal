@@ -2,12 +2,8 @@
 
 namespace App\Infrastructure\Controllers;
 
-use App\Application\BuyCoin\BuyCoinService;
-use App\Application\GetCoin\GetCoinService;
-use App\Application\SellCoin\SellCoinService;
-use App\Application\Wallet\GetWalletService;
-use Barryvdh\Debugbar\Controllers\BaseController;
-use Exception;
+use App\Application\Coin\SellCoinService;
+use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

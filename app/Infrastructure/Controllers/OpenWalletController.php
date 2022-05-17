@@ -2,13 +2,10 @@
 
 namespace App\Infrastructure\Controllers;
 
-use App\Application\GetCoin\GetCoinService;
 use App\Application\Wallet\OpenWalletService;
-use Barryvdh\Debugbar\Controllers\BaseController;
-use Exception;
+use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
 class OpenWalletController extends BaseController

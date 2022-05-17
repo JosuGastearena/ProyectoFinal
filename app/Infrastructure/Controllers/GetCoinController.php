@@ -2,9 +2,8 @@
 
 namespace App\Infrastructure\Controllers;
 
-use App\Application\GetCoin\GetCoinService;
-use Barryvdh\Debugbar\Controllers\BaseController;
-use Exception;
+use App\Application\Coin\GetCoinService;
+use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -19,10 +18,10 @@ class GetCoinController extends BaseController
         $this->getCoinService = $getCoinService;
     }
 
-    public function __invoke(string $coinID): JsonResponse
+    public function __invoke(string $coin_id): JsonResponse
     {
         try {
-            $coin = $this->getCoinService->execute($coinID);
+            $coin = $this->getCoinService->execute($coin_id);
         } catch (ServiceUnavailableHttpException $exception) {
             return response()->json([
                 'error' => $exception->getMessage()

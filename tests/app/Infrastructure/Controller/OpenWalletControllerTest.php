@@ -57,7 +57,4 @@ class OpenWalletControllerTest extends TestCase
 
         $response->assertStatus(Response::HTTP_SERVICE_UNAVAILABLE)->assertExactJson(['error' => 'Service unavailable']);
     }
-
-
-
 }

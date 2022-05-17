@@ -1,12 +1,8 @@
 <?php
 
-namespace App\Application\SellCoin;
+namespace App\Application\Coin;
 
 use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
-use App\Domain\Coin;
-use Exception;
-use PHPUnit\Util\Json;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SellCoinService
 {

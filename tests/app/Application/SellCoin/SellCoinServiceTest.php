@@ -2,18 +2,14 @@
 
 namespace Tests\app\Application\SellCoin;
 
-use App\Application\BuyCoin\BuyCoinService;
+use App\Application\Coin\SellCoinService;
 use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
-use App\Application\CryptoCurrenciesDataSource\CurrenciesDataSource;
-use App\Application\GetCoin\GetCoinService;
-use App\Application\SellCoin\SellCoinService;
 use App\Domain\Coin;
 use App\Domain\Wallet;
-use Illuminate\Http\Response;
+use Mockery;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Tests\TestCase;
-use Mockery;
 
 class SellCoinServiceTest extends TestCase
 {
@@ -73,7 +69,6 @@ class SellCoinServiceTest extends TestCase
         $this->sellCoinService->execute($coin_id, $wallet_id, $amount_usd);
 
         $this->assertEquals($wallet, $wallet2);
-
     }
 
     /**

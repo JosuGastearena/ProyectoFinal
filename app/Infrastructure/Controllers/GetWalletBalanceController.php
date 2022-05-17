@@ -2,11 +2,8 @@
 
 namespace App\Infrastructure\Controllers;
 
-use App\Application\GetCoin\GetCoinService;
 use App\Application\Wallet\GetWalletBalanceService;
-use App\Application\Wallet\GetWalletService;
-use Barryvdh\Debugbar\Controllers\BaseController;
-use Exception;
+use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -21,10 +18,10 @@ class GetWalletBalanceController extends BaseController
         $this->getWalletBalanceService = $getWalletBalanceService;
     }
 
-    public function __invoke(string $walletID): JsonResponse
+    public function __invoke(string $wallet_id): JsonResponse
     {
         try {
-            $balance = $this->getWalletBalanceService->execute($walletID);
+            $balance = $this->getWalletBalanceService->execute($wallet_id);
         } catch (ServiceUnavailableHttpException $exception) {
             return response()->json([
                 'error' => $exception->getMessage()

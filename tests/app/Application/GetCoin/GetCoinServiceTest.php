@@ -2,15 +2,13 @@
 
 namespace Tests\app\Application\GetCoin;
 
+use App\Application\Coin\GetCoinService;
 use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
-use App\Application\CryptoCurrenciesDataSource\CurrenciesDataSource;
-use App\Application\GetCoin\GetCoinService;
 use App\Domain\Coin;
-use Illuminate\Http\Response;
+use Mockery;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Tests\TestCase;
-use Mockery;
 
 class GetCoinServiceTest extends TestCase
 {

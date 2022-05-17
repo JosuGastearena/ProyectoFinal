@@ -164,5 +164,4 @@ class BuyCoinControllerTest extends TestCase
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST)->assertExactJson(['error' => 'amount_usd not introduced']);
     }
-
 }

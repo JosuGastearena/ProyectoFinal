@@ -3,10 +3,6 @@
 namespace App\Application\Wallet;
 
 use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
-use App\Domain\Coin;
-use App\Domain\Wallet;
-use Exception;
-use PHPUnit\Util\Json;
 
 class GetWalletBalanceService
 {
@@ -17,8 +13,8 @@ class GetWalletBalanceService
         $this->cryptoCurrenciesDataSource = $cryptoCurrenciesDataSource;
     }
 
-    public function execute(string $walletID): float
+    public function execute(string $wallet_id): float
     {
-        return $this->cryptoCurrenciesDataSource->getsWalletBalance($walletID);
+        return $this->cryptoCurrenciesDataSource->getsWalletBalance($wallet_id);
     }
 }

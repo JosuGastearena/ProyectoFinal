@@ -1,11 +1,8 @@
 <?php
 
-namespace App\Application\BuyCoin;
+namespace App\Application\Coin;
 
 use App\Application\CryptoCurrenciesDataSource\CryptoCurrenciesDataSource;
-use App\Domain\Coin;
-use Exception;
-use PHPUnit\Util\Json;
 
 class BuyCoinService
 {
