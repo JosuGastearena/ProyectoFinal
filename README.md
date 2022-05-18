@@ -1,61 +1,30 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Miembros del grupo
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+- Josu Gastearena salgado
+- Ainhoa Quintana Beraiz
+- Ander Flores Palacios
+- Aimar Uriarte Burdaspar
 
-## About Laravel
+## Metodología de trabajo y Organización
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Comenzamos realizando la práctica final todos juntos en las vacaciones de Semana Santa, conectandonos a traves de Discord y trabajando los 4 en un único ordenador. De esta manera, empezamos a definir la manera en la que íbamos a abordar el trabajo y a entender un poco como debía ser resuelto, comparándolo con la práctica anterior: user-basic-api.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Al volver las clases, y tras las diferentes explicaciones, decidimos dividir el trabajo y realizar los endPoint por parejas: Ander y Ainhoa por un lado, y Josu y Aimar por otro. También tomamos la decisión de no dividir el trabajo a realizar en cada endpoint ya que queríamos aprender a realizar un endpoint de principio a fin.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Finalmente, esta última semana, hemos vuelto a trabajar igual que lo hicimos en Semana Santa, mayoritariamente desde el ordenador de Ander por problemas en la configuración de la cache de los otros integrantes del grupo, que finalmente fueron resueltos.
 
-## Learning Laravel
+## Métodologia de resolución de un endpoint
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Para resolver la práctica hemos realizado TDD, es decir, hemos guiado el diseño de nuestro código a traves de tests. En primer lugar, escribiamos los tests para el controlador pertinente, tests que obviamente fallaban, e íbamos implementando el código necesario hasta conseguir que el test pasara, para finalmente refactorizar y refinar la solución.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Objetivos cumplidos
 
-## Laravel Sponsors
+Hemos conseguido implementar todos los endpoint que se pedian en la práctica. Trás haber conseguido los objetivos, hemos dedicado un tiempo a refinar el código, aplicando diferentes técnicas como el refactor: rename y el CS Fixer, para conseguir un código más mantenible.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Finalmente, el último día hemos sacado fuera la dependencia de la API en una clase Client, para poder testar la clase CryptoCurrenciesDataSource; no obstante, hemos tenido problemas y no hemos conseguido testar el método coinStatus, por problemas con los tipos del response.
 
-### Premium Partners
+## Cosas a tener en cuenta
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+Hemos intentado aplicar las técnicas aprendidas en clase para un buen diseño software, y aunque no hemos contado con el tiempo necesario para poder aplicarlas de la mejor manera posible, esperamos que se vean reflejadas en los 6 endpoints.
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Finalmente, en github actions hemos automatizado la ejecución de los tests y al hacer commit también con grumphp hemos ejecutado los tests para comprobar que eran correctos antes de commit-ear un cambio. Hemos trabajado también con Pull-Request.
