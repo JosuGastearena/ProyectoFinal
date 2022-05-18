@@ -1,6 +1,6 @@
 ## Miembros del grupo
 
-- Josu Gastearena salgado
+- Josu Gastearena Salgado
 - Ainhoa Quintana Beraiz
 - Ander Flores Palacios
 - Aimar Uriarte Burdaspar
