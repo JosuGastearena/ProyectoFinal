@@ -2,25 +2,28 @@
 
 namespace App\Application\CryptoCurrenciesDataSource;
 
+use App\Application\Client\Client;
 use App\Domain\Coin;
 use App\Domain\CryptoCurrenciesCache;
 use App\Domain\Wallet;
-use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Exception;
 
 class CryptoCurrenciesDataSource implements CurrenciesDataSource
 {
     private CryptoCurrenciesCache $cache;
+    private Client $client;
+
 
     public function __construct()
     {
         $this->cache = new CryptoCurrenciesCache();
+        $this->client = new Client();
     }
 
     public function coinStatus(string $coin_id): Coin
     {
-        $response = Http::get('https://api.coinlore.net/api/ticker/?id='.$coin_id);
+        $response = $this->client->getCoinStatus($coin_id);
         try {
             $data = json_decode($response, true);
             $coin = new Coin($data[0]['id'], $data[0]['symbol'], $data[0]['name'], $data[0]['nameid'], $data[0]['rank'], $data[0]['price_usd']);
@@ -64,5 +67,10 @@ class CryptoCurrenciesDataSource implements CurrenciesDataSource
     public function addWallet($wallet): void
     {
         $this->cache->set($wallet);
+    }
+
+    public function setClient($client): void
+    {
+        $this->client = $client;
     }
 }
